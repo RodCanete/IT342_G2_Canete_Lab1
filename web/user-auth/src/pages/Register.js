@@ -17,25 +17,29 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+    const normalizedConfirm = confirmPassword.trim();
+
     // Validation
-    if (!email || !password || !confirmPassword) {
-      setError('All fields are required');
+    if (!normalizedEmail || !normalizedPassword || !normalizedConfirm) {
+      setError('Email, password, and confirm password are required');
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (normalizedPassword !== normalizedConfirm) {
       setError('Passwords do not match');
       return;
     }
 
-    if (password.length < 6) {
+    if (normalizedPassword.length < 6) {
       setError('Password must be at least 6 characters');
       return;
     }
 
     setLoading(true);
     try {
-      const response = await authService.register(email, password);
+      const response = await authService.register(normalizedEmail, normalizedPassword);
       const { token, email: userEmail } = response.data;
       login(token, { email: userEmail });
       navigate('/dashboard');
@@ -53,6 +57,7 @@ const Register = () => {
         {error && <div className="error-message">{error}</div>}
         
         <form onSubmit={handleSubmit}>
+          <p className="helper-text">Required fields: Email and Password</p>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -62,6 +67,8 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
+              required
+              autoComplete="email"
             />
           </div>
 
@@ -74,6 +81,8 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
+              required
+              autoComplete="new-password"
             />
           </div>
 
@@ -86,6 +95,8 @@ const Register = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               disabled={loading}
+              required
+              autoComplete="new-password"
             />
           </div>
 

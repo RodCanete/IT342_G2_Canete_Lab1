@@ -16,14 +16,17 @@ const Login = () => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password) {
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+
+    if (!normalizedEmail || !normalizedPassword) {
       setError('Email and password are required');
       return;
     }
 
     setLoading(true);
     try {
-      const response = await authService.login(email, password);
+      const response = await authService.login(normalizedEmail, normalizedPassword);
       const { token, email: userEmail } = response.data;
       login(token, { email: userEmail });
       navigate('/dashboard');
@@ -50,6 +53,8 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
+              required
+              autoComplete="email"
             />
           </div>
 
@@ -62,6 +67,8 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
+              required
+              autoComplete="current-password"
             />
           </div>
 
