@@ -23,7 +23,8 @@ public class JwtTokenProvider {
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-                .signWith(key, SignatureAlgorithm.HS512)
+                // HS256 requires a >= 256-bit (32-byte) secret; our config is sized for that.
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 

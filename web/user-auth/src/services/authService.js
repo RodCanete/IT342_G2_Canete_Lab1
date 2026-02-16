@@ -25,8 +25,8 @@ export const authService = {
   login: (email, password) =>
     api.post('/auth/login', { email, password }),
 
-  getProfile: () =>
-    api.get('/user/me'),
+  // backend exposes profile at /api/auth/user/me
+  getProfile: () => api.get('/auth/user/me'),
 
   logout: () => {
     localStorage.removeItem('token');
