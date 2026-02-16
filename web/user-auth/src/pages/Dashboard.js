@@ -58,48 +58,52 @@ const Dashboard = () => {
         {error && <div className="error-message">{error}</div>}
 
         {profile && (
-          <div className="profile-card">
-            <h2>Your Profile</h2>
-            <div className="profile-info">
-              <div className="info-item">
-                <label>Email:</label>
-                <span>{profile.email}</span>
+          <>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-title">Welcome</div>
+                <div className="stat-value">{profile.email}</div>
               </div>
 
-              <div className="info-item">
-                <label>User ID:</label>
-                <span>{profile.id}</span>
+              <div className="stat-card">
+                <div className="stat-title">Role</div>
+                <div className="stat-value">{profile.role || 'User'}</div>
               </div>
 
-              <div className="info-item">
-                <label>Role:</label>
-                <span className="badge">{profile.role}</span>
-              </div>
-
-              <div className="info-item">
-                <label>Account Status:</label>
-                <span className={`badge ${profile.isActive ? 'active' : 'inactive'}`}>
+              <div className="stat-card">
+                <div className="stat-title">Status</div>
+                <div className={`stat-value status ${profile.isActive ? 'active' : 'inactive'}`}>
                   {profile.isActive ? 'Active' : 'Inactive'}
-                </span>
-              </div>
-
-              <div className="info-item">
-                <label>Member Since:</label>
-                <span>{new Date(profile.createdAt).toLocaleDateString()}</span>
-              </div>
-
-              {profile.lastLoginAt && (
-                <div className="info-item">
-                  <label>Last Login:</label>
-                  <span>{new Date(profile.lastLoginAt).toLocaleString()}</span>
                 </div>
-              )}
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-title">Member Since</div>
+                <div className="stat-value">{new Date(profile.createdAt).toLocaleDateString()}</div>
+              </div>
             </div>
 
-            <button onClick={fetchProfile} className="btn-refresh">
-              Refresh Profile
-            </button>
-          </div>
+            <div className="profile-card">
+              <h2>Account Details</h2>
+              <div className="profile-info">
+                <div className="info-item">
+                  <label>User ID:</label>
+                  <span>{profile.id}</span>
+                </div>
+
+                {profile.lastLoginAt && (
+                  <div className="info-item">
+                    <label>Last Login:</label>
+                    <span>{new Date(profile.lastLoginAt).toLocaleString()}</span>
+                  </div>
+                )}
+              </div>
+
+              <button onClick={fetchProfile} className="btn-refresh">
+                Refresh Profile
+              </button>
+            </div>
+          </>
         )}
 
         {!profile && !error && (

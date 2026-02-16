@@ -44,7 +44,9 @@ const Register = () => {
       login(token, { email: userEmail });
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      const serverMsg = err.response?.data?.message || err.response?.data || err.response?.statusText;
+      console.error('Registration error:', err.response || err);
+      setError(serverMsg || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
