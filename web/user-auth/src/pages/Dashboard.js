@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
+import GlassSurface from '../components/GlassSurface';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -60,48 +61,35 @@ const Dashboard = () => {
         {profile && (
           <>
             <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-title">Welcome</div>
-                <div className="stat-value">{profile.email}</div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-title">Role</div>
-                <div className="stat-value">{profile.role || 'User'}</div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-title">Status</div>
-                <div className={`stat-value status ${profile.isActive ? 'active' : 'inactive'}`}>
-                  {profile.isActive ? 'Active' : 'Inactive'}
+              <GlassSurface borderRadius={16} backgroundOpacity={0.15}>
+                <div className="stat-card">
+                  <div className="stat-title">Welcome</div>
+                  <div className="stat-value">{profile.email}</div>
                 </div>
-              </div>
+              </GlassSurface>
 
-              <div className="stat-card">
-                <div className="stat-title">Member Since</div>
-                <div className="stat-value">{new Date(profile.createdAt).toLocaleDateString()}</div>
-              </div>
-            </div>
-
-            <div className="profile-card">
-              <h2>Account Details</h2>
-              <div className="profile-info">
-                <div className="info-item">
-                  <label>User ID:</label>
-                  <span>{profile.id}</span>
+              <GlassSurface borderRadius={16} backgroundOpacity={0.15}>
+                <div className="stat-card">
+                  <div className="stat-title">Role</div>
+                  <div className="stat-value">{profile.role || 'User'}</div>
                 </div>
+              </GlassSurface>
 
-                {profile.lastLoginAt && (
-                  <div className="info-item">
-                    <label>Last Login:</label>
-                    <span>{new Date(profile.lastLoginAt).toLocaleString()}</span>
+              <GlassSurface borderRadius={16} backgroundOpacity={0.15}>
+                <div className="stat-card">
+                  <div className="stat-title">Status</div>
+                  <div className={`stat-value status ${profile.isActive ? 'active' : 'inactive'}`}>
+                    {profile.isActive ? 'Active' : 'Inactive'}
                   </div>
-                )}
-              </div>
+                </div>
+              </GlassSurface>
 
-              <button onClick={fetchProfile} className="btn-refresh">
-                Refresh Profile
-              </button>
+              <GlassSurface borderRadius={16} backgroundOpacity={0.15}>
+                <div className="stat-card">
+                  <div className="stat-title">Member Since</div>
+                  <div className="stat-value">{new Date(profile.createdAt).toLocaleDateString()}</div>
+                </div>
+              </GlassSurface>
             </div>
           </>
         )}
