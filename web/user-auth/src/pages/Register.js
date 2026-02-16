@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
+import GlassSurface from '../components/GlassSurface';
 import './Auth.css';
 
 const Register = () => {
@@ -54,12 +55,19 @@ const Register = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-box">
-        <h1>Create Account</h1>
-        {error && <div className="error-message">{error}</div>}
-        
-        <form onSubmit={handleSubmit}>
-          <p className="helper-text">Required fields: Email and Password</p>
+      <GlassSurface 
+        width="100%" 
+        height="auto"
+        borderRadius={24}
+        className="glass-auth-box"
+        backgroundOpacity={0.1}
+      >
+        <div className="auth-box">
+          <h1>Create Account</h1>
+          {error && <div className="error-message">{error}</div>}
+          
+          <form onSubmit={handleSubmit}>
+            <p className="helper-text">Required fields: Email and Password</p>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -110,7 +118,8 @@ const Register = () => {
         <p className="auth-link">
           Already have an account? <Link to="/login">Sign In</Link>
         </p>
-      </div>
+        </div>
+      </GlassSurface>
     </div>
   );
 };
